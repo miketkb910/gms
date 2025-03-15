@@ -112,6 +112,24 @@ const Members = () => {
         }
     }
 
+var content = null;
+ if(!issearchmode){
+    content = data.map((item,index)=>{
+    if(index+1 >= startfrom+1 && index+1 <= endto){
+    return(
+         <Membercards item={item} />
+    );
+    }
+})
+} else{
+   content =  data.map((item,index)=>{
+        return(
+             <Membercards item={item} />
+        );
+    }
+   );
+}
+
   return (
     <div class='w-3/4 p-5 text-black h-[100vh]' >
         
@@ -141,13 +159,10 @@ const Members = () => {
         </div>
 
         <div class='bg-slate-100 rounded-lg mt-5 p-5 w-full grid grid-cols-3 gap-5 h-[60%] overflow-x-auto' > 
-            {
-                data.map((item,index)=>{
-                    return(
-                         <Membercards item={item} />
-                    );
-                })
-            }
+            
+            {   
+                content
+            }  
         </div>
 
         {addmem && <Addmemmod closeaddmem={showaddmem}/>}

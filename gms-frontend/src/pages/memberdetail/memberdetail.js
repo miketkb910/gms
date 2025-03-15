@@ -13,12 +13,13 @@ const Memberdetail = () => {
     const [data,setdata] = useState(null);
     const [membership,setmembership] = useState([]);
     const [planmember,setplanmember] = useState("");
+    const [memshipid,setmemshipid] = useState(0); 
     const {id} = useParams();
+    
 
     useEffect(() => {
         fetchdata();
         fetchmembership();
-        console.log(id);
     },[])
     const fetchmembership = async () => {
         await axios.get('http://localhost:4000/membership/get-membership',{withCredentials: true}).then((res)=>{
@@ -26,7 +27,6 @@ const Memberdetail = () => {
             setplanmember(res.data[0]._id);
         }).catch(err=>{
             console.log(err);
-            toast.error('Failed to fetch membership');
         });
     };
     const fetchdata = async () => {
@@ -34,20 +34,19 @@ const Memberdetail = () => {
             console.log(res);
             setdata(res.data.member);
             setstatus(res.data.member.status);
-            toast.success(res.data.message);
+
+            setmemshipid(res.data.mems.months);
+            console.log(memshipid);
         }).catch((err)=>{
             console.log(err);
-            toast.error('Failed to fetch member');
         });
     };
 
     const handleswitchbtn = async() => {
         let statuss= status==="active"?"pending":"active";
         await axios.post(`http://localhost:4000/members/changestatus/${id}`,{status:statuss},{withCredentials:true}).then((res)=>{
-            toast.success('Status changed successfully');
         }).catch(err=>{
             console.log(err);
-            toast.error('Failed to change status');
         });
         setstatus(statuss);
     }
@@ -68,17 +67,20 @@ const Memberdetail = () => {
         await axios.put(`http://localhost:4000/members/updatememplan/${id}`,{membership:planmember},{withCredentials:true}).then((res)=>{
             console.log(res);
             setdata(res.data.member);
-            toast.success('Membership plan updated successfully');
         }).catch(err=>{
-            toast.error('Could not update')
             console.log(err);
         });
     }
 
   return (
     <div className='w-3/4 text-black p-5 '>
+        <div className='flex justify-between'>
         <div onClick={() => navigate(-1)} className='bg-slate-800 text-white hover:text-black hover:bg-white border-2 rounded-lg h-[38px] flex justify-center items-center w-[9%] cursor-pointer ' >
             <ArrowBackIcon sx={{fontSize:'25px'}}/> Back 
+        </div>
+        <div onClick={() => navigate(-1)} className='bg-red-600 text-white hover:text-black hover:bg-white border-2 rounded-lg h-[38px] flex justify-center items-center w-[9%] cursor-pointer ' >
+             Remove 
+        </div>
         </div>
         <div className='mt-10 p-2 '>
             <div className='w-[100%] h-[450px] flex'>
@@ -88,6 +90,9 @@ const Memberdetail = () => {
                     <div className='mt-1 mb-2 text-2xl  font-semibold'> Name: {data?.name} </div>
                     <div className='mt-1 mb-2 text-2xl  font-semibold'> Mobile: {data?.mobile} </div>
                     <div className='mt-1 mb-2 text-2xl  font-semibold'> Address: {data?.address} </div>
+                    
+                    <div className='mt-1 mb-2 text-2xl  font-semibold'> Membership: {memshipid} months</div>
+                    
                     <div className='mt-1 mb-2 text-2xl  font-semibold'> Joined date: {data?.createdAt.slice(0,10).split('-').reverse().join('-')} </div>
                     <div className='mt-1 mb-2 text-2xl  font-semibold'> Next bill date: {data?.nextbilldate.slice(0,10).split('-').reverse().join('-')} </div>
                     <div className='mt-1 mb-2 text-2xl  font-semibold'> Status:  <Switch onColor='#6366F1' checked={status==="active"} onChange={()=>{handleswitchbtn()}}  /></div>
@@ -114,7 +119,6 @@ const Memberdetail = () => {
 
             </div>  
         </div>
-        <ToastContainer/>
     </div>
   )
 }

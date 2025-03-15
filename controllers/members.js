@@ -138,12 +138,14 @@ exports.getindmember = async(req,res) => {
     try {
         const {id} = req.params;
         const member = await Members.findOne({_id:id, gym:req.gym._id});
+        const mems = await Membership.findOne({_id:member.membership});
         if(!member){
             return res.status(400).json({ error: 'member not found' });
         }
         res.status(200).json({
             message: 'fetched member succesfully',
-            member: member
+            member: member,
+            mems:mems
         });
     } catch (error) {
         res.status(500).json({error:'server error'});

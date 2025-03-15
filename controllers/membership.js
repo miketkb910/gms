@@ -35,3 +35,4 @@ exports.getmemberships = async (req,res) => {
         res.status(500).json({error:"server error"});
     }
 }
+
