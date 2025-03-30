@@ -6,6 +6,7 @@ import TimerOffIcon from '@mui/icons-material/TimerOff';
 import ErrorIcon from '@mui/icons-material/Error';
 import ReportGmailerrorredIcon from '@mui/icons-material/ReportGmailerrorred';
 import { Link } from 'react-router-dom';
+import { ToastContainer } from 'react-toastify';
 
 const Dashboard = () => {
   const [smalldash,setsmalldash] = useState(false);
@@ -54,6 +55,7 @@ const Dashboard = () => {
         </Link>
 
       </div >
+        <ToastContainer/>
     </div>
   )
 }

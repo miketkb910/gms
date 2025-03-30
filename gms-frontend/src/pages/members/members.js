@@ -10,7 +10,7 @@ import Membercards from './membercards/membercards';
 import Addmemmod from './addmemmod/addmemmod';
 import Addmembership from './addmembership/addmembership';
 import axios from 'axios';
-import { ToastContainer,toast } from 'react-toastify';
+import {ToastContainer,toast} from 'react-toastify';
 
 const Members = () => {
     const [data,setdata] = useState([]);
@@ -159,7 +159,6 @@ var content = null;
         </div>
 
         <div class='bg-slate-100 rounded-lg mt-5 p-5 w-full grid grid-cols-3 gap-5 h-[60%] overflow-x-auto' > 
-            
             {   
                 content
             }  

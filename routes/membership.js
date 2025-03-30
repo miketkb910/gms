@@ -5,5 +5,6 @@ const membershipcontroller = require('../controllers/membership');
 
 router.post('/add',auth,membershipcontroller.addmembership);
 router.get('/get-membership',auth,membershipcontroller.getmemberships);
+router.delete('/remove',auth,membershipcontroller.remove);
 
 module.exports = router;

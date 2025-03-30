@@ -3,6 +3,8 @@ import ArrowBackIcon from '@mui/icons-material/ArrowBack';
 import { Link } from 'react-router-dom'
 import Membercards from '../members/membercards/membercards';
 import { getmonthlyjoined,expiringwithin3days,expired,inactive } from './data';
+import { ToastContainer,toast } from 'react-toastify';
+
 
 
 const Generaluser = () => {
@@ -64,6 +66,7 @@ const Generaluser = () => {
                 })
             }
         </div>
+        <ToastContainer/>
     </div>
   )
 }

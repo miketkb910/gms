@@ -13,5 +13,6 @@ router.get('/inactive',auth,memberscontroller.inactive);
 router.get('/getindmember/:id',auth,memberscontroller.getindmember);
 router.post('/changestatus/:id',auth,memberscontroller.changestatus);
 router.put('/updatememplan/:id',auth,memberscontroller.updatememplan);
+router.delete('/deletemember/:id',auth,memberscontroller.delmember);
 
 module.exports = router;

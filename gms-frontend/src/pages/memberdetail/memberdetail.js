@@ -72,13 +72,23 @@ const Memberdetail = () => {
         });
     }
 
+    const handledelmember = async() => {
+        navigate(-1);
+        await axios.delete(`http://localhost:4000/members/deletemember/${id}`,{withCredentials:true}).then((res)=>{
+            toast.success('member removed');
+        }).catch(err=>{
+            toast.error('not deleted');
+            console.log(err);
+        });
+    }
+
   return (
     <div className='w-3/4 text-black p-5 '>
         <div className='flex justify-between'>
         <div onClick={() => navigate(-1)} className='bg-slate-800 text-white hover:text-black hover:bg-white border-2 rounded-lg h-[38px] flex justify-center items-center w-[9%] cursor-pointer ' >
             <ArrowBackIcon sx={{fontSize:'25px'}}/> Back 
         </div>
-        <div onClick={() => navigate(-1)} className='bg-red-600 text-white hover:text-black hover:bg-white border-2 rounded-lg h-[38px] flex justify-center items-center w-[9%] cursor-pointer ' >
+        <div onClick={() => handledelmember()} className='bg-red-600 text-white hover:text-black hover:bg-white border-2 rounded-lg h-[38px] flex justify-center items-center w-[9%] cursor-pointer ' >
              Remove 
         </div>
         </div>

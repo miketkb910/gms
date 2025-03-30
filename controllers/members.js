@@ -5,7 +5,7 @@ const { request } = require('express');
 exports.getallmembers = async(req,res) =>{
     try {
         const {skip,limit} = req.query;
-        const members = await Members.find({gym:req.gym._id});
+        const members = await Members.find({gym:req.gym._id}).sort({_id: -1});
         const totalmember = members.length;
         const limitedmember = members.length;
         const members1 = members;
@@ -20,6 +20,19 @@ exports.getallmembers = async(req,res) =>{
         res.status(500).json({ error: 'server error' });
     }
 };
+
+exports.delmember = async(req,res) => {
+    try {
+        const {id} = req.params;
+        const member = await Members.findByIdAndDelete(id);
+        if(!member) {
+            return res.status(404).json({ message: 'member not found',member:member });
+        }
+        res.status(200).json({ message: 'member deleted succesfully' });
+    } catch(error) {
+        res.status(500).json({error: 'server error'});   
+    }
+}; 
 
 exports.createnewmember = async(req,res) => {
     try {
@@ -219,3 +232,5 @@ function addMonthsToDate(months,joiningDate) {
     futureDate.setDate(adjustedDay);
     return futureDate;
   }
+
+  

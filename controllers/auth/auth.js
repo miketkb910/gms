@@ -5,7 +5,7 @@ const auth = async (req,res,next) => {
     try{
         const token = req.cookies.cookietoken;
         if(!token){
-            return res.status(401).json({error:'no token provided'});
+            return res.status(401).json({error:`no token provided ${req}`});
         }
         const decode = jwt.verify(token,process.env.jwtsecretkey);
         req.gym = await gym.findById(decode.isexistid).select('-password');
